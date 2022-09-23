@@ -59,11 +59,13 @@ const fetchApi = async (pokemon) => {
 // Search event listner 
 search.addEventListener('change', async (event) =>{
     const selectedPokemon = await fetchApi(event.target.value.toLowerCase())
+
     setPokemon(selectedPokemon);
 } )
 
 // this function is for setting the pokemon attribues within the card
 function setPokemon(pokemon){
+
     // set pokemon name and id 
     pokemonName.innerHTML = 'Name: ' + pokemon.name
     pokemonID.innerHTML = 'ID: ' + '#' + pokemon.id
@@ -78,9 +80,15 @@ function setPokemon(pokemon){
     SpDef = pokemon.stats[4].base_stat
     Speed = pokemon.stats[5].base_stat
 
+
+    // remove all childrean from the type and weaknesses lists
+    removeAllChildren(pokemonType);
+    //removeAllChildren(pokemonWeakness);
+
     // dynamically generate pokemon type
     pokemon.types.forEach((pokiType) =>{
-        console.log(pokiType.type)
+        
+
 
         // if they are lowercase 
         if (pokiType.type.name == pokiType.type.name.toLowerCase()) {
@@ -92,6 +100,13 @@ function setPokemon(pokemon){
         }
     })
 
+    function removeAllChildren(parent) {
+        // remove childrean 
+        while (parent.firstChild) {
+            parent.removeChild(parent.lastChild);
+        }
+
+    }
 
 
 
