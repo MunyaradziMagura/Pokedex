@@ -31,19 +31,18 @@ const typeColors = {
 
 // pokemon attributes
 var type = 'Electric'
-var number = '45'
 // Health
-var Health = 35
+var Health;
 // Attack
-var Attack = 55
+var Attack;
 // Defence
-var Defence = 40
+var Defence;
 // Sp. Atk
-var SpAtk = 50
+var SpAtk;
 // Sp. Def
-var SpDef = 50
+var SpDef;
 // Speed
-var Speed = 90
+var Speed;
 
 // fetch pokemon
 
@@ -72,7 +71,18 @@ function setPokemon(pokemon){
     pokemonImage.src = pokemon.sprites.front_default
     
     // set pokemon stats
-
+    // Health
+    Health = pokemon.stats[0].base_stat
+    // Attack
+    Attack = pokemon.stats[1].base_stat
+    // Defence
+    Defence = pokemon.stats[2].base_stat
+    // Sp. Atk
+    SpAtk = pokemon.stats[3].base_stat
+    // Sp. Def
+    SpDef = pokemon.stats[4].base_stat
+    // Speed
+    Speed =pokemon.stats[5].base_stat
 
 
 
@@ -91,7 +101,7 @@ function setPokemon(pokemon){
   ];
   
   var layout = { 
-    title: `Identification #${number}`,
+    title: `Base Stats`,
     font: {size: 20}
   };
   Plotly.newPlot('pokemonStats', data, layout);
