@@ -12,7 +12,8 @@ const pokemonWeakness = document.querySelector('#pokemonWeakness');
 const pokemonName = document.querySelector('#pokemonName');
 const pokemonID = document.querySelector('#pokemonID');
 const pokemonImage = document.querySelector('#pokemonImage')
-
+// evolution query selector
+const pokemonEvolutions = document.querySelector('#pokemonEvolutions')
 // pokemon colour types
 const typeColors = {
     "rock":     "182, 158,  49",
@@ -35,23 +36,16 @@ const typeColors = {
     "dragon":   "112,  55, 255"
 }
 
-// pokemon attributes
-var type = 'Electric'
-// Health
-var Health;
-// Attack
-var Attack;
-// Defence
-var Defence;
-// Sp. Atk
-var SpAtk;
-// Sp. Def
-var SpDef;
-// Speed
-var Speed;
+
+function removeAllChildren(parent) {
+    // remove childrean 
+    while (parent.firstChild) {
+        parent.removeChild(parent.lastChild);
+    }
+
+}
 
 // fetch pokemon
-
 const fetchApi = async (pokemon, url) => {
     // request pokemon data
     const response = await fetch(url + pokemon);
@@ -63,6 +57,7 @@ const fetchApi = async (pokemon, url) => {
 
 // Search event listner 
 search.addEventListener('change', async (event) =>{
+
     const selectedPokemon = await fetchApi(event.target.value.toLowerCase(), URL)
 
     setPokemon(selectedPokemon);
@@ -78,17 +73,29 @@ function setPokemon(pokemon){
     pokemonImage.src = pokemon.sprites.front_default
     
     // set pokemon stats
-    Health = pokemon.stats[0].base_stat
-    Attack = pokemon.stats[1].base_stat
-    Defence = pokemon.stats[2].base_stat
-    SpAtk = pokemon.stats[3].base_stat
-    SpDef = pokemon.stats[4].base_stat
-    Speed = pokemon.stats[5].base_stat
+
+    // Health
+    var Health = pokemon.stats[0].base_stat
+
+    // Attack
+    var Attack = pokemon.stats[1].base_stat
+
+    // Defence
+    var Defence = pokemon.stats[2].base_stat
+
+    // Sp. Atk
+    var SpAtk = pokemon.stats[3].base_stat
+
+    // Sp. Def
+    var SpDef = pokemon.stats[4].base_stat
+
+    // Speed
+    var Speed = pokemon.stats[5].base_stat
+
 
 
     // remove all childrean from the type and weaknesses lists
     removeAllChildren(pokemonType);
-    //removeAllChildren(pokemonWeakness);
 
     // dynamically generate pokemon type
     pokemon.types.forEach((pokiType) =>{
@@ -104,14 +111,6 @@ function setPokemon(pokemon){
             pokemonType.appendChild(chosenType)
         }
     })
-
-    function removeAllChildren(parent) {
-        // remove childrean 
-        while (parent.firstChild) {
-            parent.removeChild(parent.lastChild);
-        }
-
-    }
 
 
 
@@ -157,14 +156,52 @@ async function evolutionChain(name) {
 
     const chain = speciesObject.chain.evolves_to
 
+    removeAllChildren(pokemonEvolutions)
+    
     // loop through evolution object and get the species names
     chain.forEach((e) =>{
         // push species names to evolutionChain array 
         evolutionChain.push(e.species.name)
     })
 
-    console.log(evolutionChain)
+    // evolve text
+    
+    evolutionChain.forEach(async (e) => {
+        // get this evolution
+        const evolution = await fetchApi(e,URL)
+
+        // bootstrap div col 
+        var col = document.createElement('div');
+        col.setAttribute('class', 'col');
+        
+        // create card
+        var card = document.createElement('div')
+        card.setAttribute('class', 'card h-100')
+        
+        // create image 
+        var image = document.createElement('img');
+        image.src = evolution.sprites.front_default
+        console.log(image)
+
+        // card body 
+        var body = document.createElement('div')
+        body.setAttribute('class', 'card-body')
+
+        // title 
+        var title = document.createElement('h5');
+        title.innerHTML = e
+
+        // join elements to create card
+        body.appendChild(title)
+        card.appendChild(image)
+        card.appendChild(body)
+        col.appendChild(card)
+        pokemonEvolutions.appendChild(col)
+
+    })
     
 }
+
+
 
 
