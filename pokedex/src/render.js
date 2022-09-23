@@ -1,4 +1,10 @@
+
+//URLS 
 const URL = 'https://pokeapi.co/api/v2/pokemon/'
+const speciesURL= 'https://pokeapi.co/api/v2/pokemon-species/'
+const evolutionURL = ' https://pokeapi.co/api/v2/evolution-chain/'
+
+
 // query selectors 
 const search = document.querySelector('#search');
 const pokemonType = document.querySelector('#pokemonType');
@@ -46,19 +52,18 @@ var Speed;
 
 // fetch pokemon
 
-const fetchApi = async (pokemon) => {
+const fetchApi = async (pokemon, url) => {
     // request pokemon data
-    const response = await fetch(URL + pokemon);
+    const response = await fetch(url + pokemon);
        
     // get the pokemon json
     const pokemonData = await response.json(); 
-    console.log(pokemonData)
     return pokemonData;
 }
 
 // Search event listner 
 search.addEventListener('change', async (event) =>{
-    const selectedPokemon = await fetchApi(event.target.value.toLowerCase())
+    const selectedPokemon = await fetchApi(event.target.value.toLowerCase(), URL)
 
     setPokemon(selectedPokemon);
 } )
@@ -128,5 +133,38 @@ function setPokemon(pokemon){
     font: {size: 20}
   };
   Plotly.newPlot('pokemonStats', data, layout);
+
+  evolutionChain(pokemon.name)
 }
+
+
+// chain . evolves_to foreach > .species .name 
+
+// get the evolution chain of that pokemon 
+async function evolutionChain(name) {
+
+    let evolutionChain = []
+
+    const getSpecies = await fetchApi(name, speciesURL);
+
+    // get species evolution chain url
+    const evolutionChainURL = getSpecies.evolution_chain.url
+
+    // json containing all species
+    const speciesObject = await fetchApi("",evolutionChainURL);
+
+    evolutionChain.push(speciesObject.chain.species.name)
+
+    const chain = speciesObject.chain.evolves_to
+
+    // loop through evolution object and get the species names
+    chain.forEach((e) =>{
+        // push species names to evolutionChain array 
+        evolutionChain.push(e.species.name)
+    })
+
+    console.log(evolutionChain)
+    
+}
+
 
