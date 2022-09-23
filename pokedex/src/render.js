@@ -9,24 +9,24 @@ const pokemonImage = document.querySelector('#pokemonImage')
 
 // pokemon colour types
 const typeColors = {
-    "rock":     [182, 158,  49],
-    "ghost":    [112,  85, 155],
-    "steel":    [183, 185, 208],
-    "water":    [100, 147, 235],
-    "grass":    [116, 203,  72],
-    "psychic":  [251,  85, 132],
-    "ice":      [154, 214, 223],
-    "dark":     [117,  87,  76],
-    "fairy":    [230, 158, 172],
-    "normal":   [170, 166, 127],
-    "fighting": [193,  34,  57],
-    "flying":   [168, 145, 236],
-    "poison":   [164,  62, 158],
-    "ground":   [222, 193, 107],
-    "bug":      [167, 183,  35],
-    "fire":     [245, 125,  49],
-    "electric": [249, 207,  48],
-    "dragon":   [112,  55, 255]
+    "rock":     "182, 158,  49",
+    "ghost":    "112,  85, 155",
+    "steel":    "183, 185, 208",
+    "water":    "100, 147, 235",
+    "grass":    "116, 203,  72",
+    "psychic":  "251,  85, 132",
+    "ice":      "154, 214, 223",
+    "dark":     "117,  87,  76",
+    "fairy":    "230, 158, 172",
+    "normal":   "170, 166, 127",
+    "fighting": "193,  34,  57",
+    "flying":   "168, 145, 236",
+    "poison":   "164,  62, 158",
+    "ground":   "222, 193, 107",
+    "bug":      "167, 183,  35",
+    "fire":     "245, 125,  49",
+    "electric": "249, 207,  48",
+    "dragon":   "112,  55, 255"
 }
 
 // pokemon attributes
@@ -58,7 +58,7 @@ const fetchApi = async (pokemon) => {
 
 // Search event listner 
 search.addEventListener('change', async (event) =>{
-    const selectedPokemon = await fetchApi(event.target.value)
+    const selectedPokemon = await fetchApi(event.target.value.toLowerCase())
     setPokemon(selectedPokemon);
 } )
 
@@ -71,18 +71,26 @@ function setPokemon(pokemon){
     pokemonImage.src = pokemon.sprites.front_default
     
     // set pokemon stats
-    // Health
     Health = pokemon.stats[0].base_stat
-    // Attack
     Attack = pokemon.stats[1].base_stat
-    // Defence
     Defence = pokemon.stats[2].base_stat
-    // Sp. Atk
     SpAtk = pokemon.stats[3].base_stat
-    // Sp. Def
     SpDef = pokemon.stats[4].base_stat
-    // Speed
-    Speed =pokemon.stats[5].base_stat
+    Speed = pokemon.stats[5].base_stat
+
+    // dynamically generate pokemon type
+    pokemon.types.forEach((pokiType) =>{
+        console.log(pokiType.type)
+
+        // if they are lowercase 
+        if (pokiType.type.name == pokiType.type.name.toLowerCase()) {
+            var chosenType = document.createElement('SPAN');
+            chosenType.setAttribute('class', 'badge');
+            chosenType.setAttribute('style', `background-color: rgb(${typeColors[pokiType.type.name]})`)
+            chosenType.innerHTML = pokiType.type.name
+            pokemonType.appendChild(chosenType)
+        }
+    })
 
 
 
