@@ -22,9 +22,9 @@ const typeColors = {
     "dragon":   [112,  55, 255]
 }
 
-
-// render pokemon stats in plotly 
-
+// pokemon attributes
+var type = 'Electric'
+var number = '45'
 // Health
 var Health = 35
 // Attack
@@ -39,6 +39,10 @@ var SpDef = 50
 var Speed = 90
 
 
+
+
+// render pokemon stats in plotly 
+
   var data = [
     {
       x: ['Health', 'Attack', 'Defence', 'Sp. Atk','Sp. Def','Speed'],
@@ -46,8 +50,12 @@ var Speed = 90
       marker:{
         color: ['rgb(6, 214, 160)','rgb(239, 71, 111)','rgb(17, 138, 178)','rgb(174, 32, 18)','rgb(0, 95, 115)','rgb(255, 190, 11)']
       },
-      type: 'bar'
+      type: 'bar'    
     }
   ];
   
-  Plotly.newPlot('pokemonStats', data);
+  var layout = { 
+    title: `Identification #${number}`,
+    font: {size: 20}
+  };
+  Plotly.newPlot('pokemonStats', data, layout);

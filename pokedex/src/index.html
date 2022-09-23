@@ -23,12 +23,17 @@
       <div class="card-header">
         <div class="input-group mb-3">
           <span class="input-group-text" id="basic-addon1">Search Pokedex</span>
-          <input type="text" class="form-control" placeholder="pikachu" aria-label="pokemon" aria-describedby="basic-addon1">
+          <input type="text"  id="search" class="form-control" placeholder="pikachu" aria-label="pokemon" aria-describedby="basic-addon1">
         </div>
       </div>
       <div class="card" >
         <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.gamersdecide.com%2Fsites%2Fdefault%2Ffiles%2Fauthors%2Fu153316%2Fpokemon-1-azumarill.jpg&f=1&nofb=1" class="card-img-top" alt="...">
         <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" id="type"><b> Type </b><span class="badge">poison</span></li>
+            <li class="list-group-item" id="weakness"><b> Weakness</b><span class="badge" style="background-color:aqua">fire</span></li>
+            
+          </ul>
           <!-- render pokemon stats -->
           <div id="pokemonStats" class="w-100" ></div>
         </div>
