@@ -10,7 +10,8 @@
  
      <!-- Bootstrap CSS -->
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
- 
+ 	<!-- Load plotly.js into the DOM -->
+   <script defer src='https://cdn.plot.ly/plotly-2.14.0.min.js'></script>
     <link rel="stylesheet" href="index.css" />
     <script defer src="render.js"></script>
   </head>
@@ -28,7 +29,8 @@
       <div class="card" >
         <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.gamersdecide.com%2Fsites%2Fdefault%2Ffiles%2Fauthors%2Fu153316%2Fpokemon-1-azumarill.jpg&f=1&nofb=1" class="card-img-top" alt="...">
         <div class="card-body">
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <!-- render pokemon stats -->
+          <div id="pokemonStats" class="w-100" ></div>
         </div>
       </div>
     </div>

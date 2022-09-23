@@ -21,3 +21,33 @@ const typeColors = {
     "electric": [249, 207,  48],
     "dragon":   [112,  55, 255]
 }
+
+
+// render pokemon stats in plotly 
+
+// Health
+var Health = 35
+// Attack
+var Attack = 55
+// Defence
+var Defence = 40
+// Sp. Atk
+var SpAtk = 50
+// Sp. Def
+var SpDef = 50
+// Speed
+var Speed = 90
+
+
+  var data = [
+    {
+      x: ['Health', 'Attack', 'Defence', 'Sp. Atk','Sp. Def','Speed'],
+      y: [Health, Attack, Defence, SpAtk, SpDef, Speed],
+      marker:{
+        color: ['rgb(6, 214, 160)','rgb(239, 71, 111)','rgb(17, 138, 178)','rgb(174, 32, 18)','rgb(0, 95, 115)','rgb(255, 190, 11)']
+      },
+      type: 'bar'
+    }
+  ];
+  
+  Plotly.newPlot('pokemonStats', data);
