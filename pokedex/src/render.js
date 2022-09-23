@@ -1,4 +1,11 @@
-console.log("hello world")
+const URL = 'https://pokeapi.co/api/v2/pokemon/'
+// query selectors 
+const search = document.querySelector('#search');
+const pokemonType = document.querySelector('#pokemonType');
+const pokemonWeakness = document.querySelector('#pokemonWeakness');
+const pokemonName = document.querySelector('#pokemonName');
+const pokemonID = document.querySelector('#pokemonID');
+const pokemonImage = document.querySelector('#pokemonImage')
 
 // pokemon colour types
 const typeColors = {
@@ -38,10 +45,39 @@ var SpDef = 50
 // Speed
 var Speed = 90
 
+// fetch pokemon
+
+const fetchApi = async (pokemon) => {
+    // request pokemon data
+    const response = await fetch(URL + pokemon);
+       
+    // get the pokemon json
+    const pokemonData = await response.json(); 
+    console.log(pokemonData)
+    return pokemonData;
+}
+
+// Search event listner 
+search.addEventListener('change', async (event) =>{
+    const selectedPokemon = await fetchApi(event.target.value)
+    setPokemon(selectedPokemon);
+} )
+
+// this function is for setting the pokemon attribues within the card
+function setPokemon(pokemon){
+    // set pokemon name and id 
+    pokemonName.innerHTML = 'Name: ' + pokemon.name
+    pokemonID.innerHTML = 'ID: ' + '#' + pokemon.id
+    // add image 
+    pokemonImage.src = pokemon.sprites.front_default
+    
+    // set pokemon stats
 
 
 
-// render pokemon stats in plotly 
+
+
+    // render pokemon stats in plotly 
 
   var data = [
     {
@@ -59,3 +95,5 @@ var Speed = 90
     font: {size: 20}
   };
   Plotly.newPlot('pokemonStats', data, layout);
+}
+
